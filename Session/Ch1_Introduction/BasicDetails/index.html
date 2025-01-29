@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+
+    body {
+      box-sizing: border-box;
+      font-family: "Funnel Display", serif;
+      background: url(/Session/CH1=>Introduction/BasicDetails/11852424_4853433.jpg);
+    }
+
+    h1 {
+      color: seagreen;
+      background-color: yellow;
+      display: flex;
+      padding: 20px;
+      justify-content: center;
+      border: none;
+      transition: all 0.5s ease-in;
+      border-radius: 20px;
+    }
+
+    h1:hover {
+      background-color: white;
+    }
+
+    ul {
+      border: none;
+      outline: none;
+      background-color: rgb(243, 238, 235);
+      border-radius: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 5px;
+      transition: all 2s linear;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0px 0px 20px rgb(83, 192, 211);
+      }
+
+      20% {
+        box-shadow: 0px 0px 40px rgb(189, 221, 6);
+
+      }
+
+      100% {
+        box-shadow: 0px 0px 100px rgb(83, 192, 211);
+      }
+
+    }
+
+    ul li {
+      margin: 0.5em;
+      font-size: 1.9rem;
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Name :&nbsp;Rohit Dnyandeo Bhalekar
+    <br>
+    Class :&nbsp;FYMCA
+    <br>
+    Phone no:&nbsp;9890729930
+    <br>
+    Gender :&nbsp;Male
+  </h1>
+
+  <ul>
+    <li>
+      <span id="hobby"
+        style="background-color: rgba(45, 139, 182, 0.651); padding: 10px; border-radius: 20px; backdrop-filter: blur(5px);">Hobbies</span>
+      <ul>
+        <li>Drawing</li>
+        <li>Reading</li>
+        <li>Gaming</li>
+      </ul>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <span id="place" style="background-color: rgba(45, 139, 182, 0.705); padding: 5px; border-radius: 10px;">My Fav
+        Places</span>
+      <ul>
+        <li>Imagica</li>
+        <li>Rio</li>
+      </ul>
+    </li>
+  </ul>
+</body>
+
+</html>

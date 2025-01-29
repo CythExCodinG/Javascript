@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Hover Effect</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      background-color: lightblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      border: 2px solid darkblue;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="hoverBox" onmouseout="alert('mouse hovered')">Hover Over Me!</div>
+
+  <script>
+    const hoverBox = document.getElementById('hoverBox');
+  </script>
+</body>
+
+</html>

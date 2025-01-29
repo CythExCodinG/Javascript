@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function menu() {
+      var a = document.getElementById("day").value
+      var day = a.toLowerCase()
+      switch (day) {
+        case 'monday':
+          document.writeln('Dosa')
+          break;
+        case 'sunday':
+          document.writeln('Idli')
+          break;
+        default:
+        // code block
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <input type="text" id="day" name="day1" placeholder="Enter a day">
+  <input type="button" id="btn" value="Show Menu" onclick="menu()">
+</body>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic E-Commerce Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .product {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .product h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+    }
+
+    .product p {
+      color: #555;
+    }
+
+    .product button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .product button:hover {
+      background-color: #45a049;
+    }
+
+    .cart {
+      margin-top: 40px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart h2 {
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-total {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .cart button {
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .cart button:hover {
+      background-color: #e65a50;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Welcome to My E-Commerce Store 🛒</h1>
+
+  <!-- Product Display Section -->
+  <div class="products">
+    <div class="product" data-id="1" data-name="Laptop" data-price="1200">
+      <img src="https://via.placeholder.com/200" alt="Laptop">
+      <h3>Laptop 💻</h3>
+      <p>$1200</p>
+      <button onclick="addToCart(1)">Add to Cart</button>
+    </div>
+    <div class="product" data-id="2" data-name="Smartphone" data-price="800">
+      <img src="https://via.placeholder.com/200" alt="Smartphone">
+      <h3>Smartphone 📱</h3>
+      <p>$800</p>
+      <button onclick="addToCart(2)">Add to Cart</button>
+    </div>
+    <div class="product" data-id="3" data-name="Headphones" data-price="150">
+      <img src="https://via.placeholder.com/200" alt="Headphones">
+      <h3>Headphones 🎧</h3>
+      <p>$150</p>
+      <button onclick="addToCart(3)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Shopping Cart Section -->
+  <div class="cart">
+    <h2>Shopping Cart 🛒</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total">Total: $<span id="cart-total">0</span></div>
+    <button onclick="clearCart()">Clear Cart</button>
+  </div>
+
+  <script>
+    let cart = [];
+
+    // Function to add a product to the cart
+    function addToCart(productId) {
+      const product = document.querySelector(`.product[data-id="${productId}"]`);
+      const productName = product.getAttribute('data-name');
+      const productPrice = parseFloat(product.getAttribute('data-price'));
+
+      // Check if the product is already in the cart
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
+      }
+
+      updateCart();
+    }
+
+    // Function to update the cart display
+    function updateCart() {
+      const cartItemsElement = document.getElementById('cart-items');
+      const cartTotalElement = document.getElementById('cart-total');
+
+      // Clear the cart display
+      cartItemsElement.innerHTML = '';
+
+      // Add each item to the cart display
+      let total = 0;
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+          <span>${item.name} (x${item.quantity})</span>
+          <span>$${itemTotal.toFixed(2)}</span>
+        `;
+        cartItemsElement.appendChild(itemElement);
+      });
+
+      // Update the total
+      cartTotalElement.textContent = total.toFixed(2);
+    }
+
+    // Function to clear the cart
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+  </script>
+</body>
+
+</html>

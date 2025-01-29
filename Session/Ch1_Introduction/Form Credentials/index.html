@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function validate() {
+      const user = 'rohit';
+      const password = '1234'; // Password should be a string
+      const imgDiv = document.querySelector('.img'); // Select the div with class 'img'
+      var name = document.getElementById('name').value;
+      var passwd = document.getElementById('passwd').value;
+
+      if (user === name && password === passwd) {
+        imgDiv.innerHTML = '<img src="/Session/Ch1_Introduction/Form Credentials/92279091_10082766.jpg" alt="jai ho" width="80%" height="100%">';
+      } else {
+        alert('Invalid username or password');
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <input id="name" type="text" placeholder="Enter Username">
+  <br>
+  <input id="passwd" type="password" placeholder="Enter Password">
+  <br>
+  <input type="button" value="Submit" onclick="validate()">
+  <div class="img" style="width: 100px; border: 1px solid black; height: 80px;"></div>
+  <!-- This is where the image will be inserted -->
+</body>
+
+</html>

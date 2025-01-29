@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convert Text to Uppercase</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 50px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Convert Text to Uppercase</h1>
+  <input type="text" id="myTextBox" placeholder="Enter text here">
+
+  <script>
+    document.getElementById('myTextBox').addEventListener('blur', function () {
+      this.value = this.value.toUpperCase();
+    });
+  </script>
+</body>
+
+</html>

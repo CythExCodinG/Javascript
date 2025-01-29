@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>onkeydown Event Example</title>
+</head>
+
+<body>
+  <h1>Press any key</h1>
+  <p>You pressed: <span id="output"></span></p>
+
+  <script>
+    document.addEventListener('keyup', function (e) {
+      const key = e.key;
+
+      document.getElementById('output').textContent = key;
+    });
+  </script>
+</body>
+
+</html>

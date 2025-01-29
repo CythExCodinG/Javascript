@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML</title>
+  <script>
+    function printNO() {
+      const a = parseInt(document.getElementById("no1").value)
+      const b = parseInt(document.getElementById("no2").value)
+      console.log(a, b)
+      const res = document.getElementById("display")
+      for (let i = a; i <= b; i++) {
+        document.writeln("<br><h2> i=" + i + "</h2>")
+      }
+      if (b < a) {
+        for (let i = b; i <= a; i++) {
+          document.writeln("<br><h2> i=" + i + "</h2>")
+        }
+      }
+
+    }
+  </script>
+</head>
+
+<body>
+  <input id="no1" type="number" placeholder="Enter no 1:">
+  <br>
+  <input id="no2" type="number" placeholder="Enter no 2">
+  <br>
+  <input type="button" value="Submit" onclick="printNO()">
+  <div class="res">
+    <h1 class="display"></h1>
+  </div>
+</body>
+
+</html>
