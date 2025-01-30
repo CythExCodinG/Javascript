@@ -4,14 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shocking Animated Landing Page</title>
+  <title>Interactive Scroll Animations</title>
   <style>
-    /* Global Styles */
     :root {
-      --primary: #ff6f61;
-      --secondary: #6b5b95;
-      --accent: #88d8b0;
-      --background: #1a1a1a;
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
     }
 
     * {
@@ -21,204 +18,183 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--background);
+      font-family: 'Arial', sans-serif;
+      background-color: var(--primary-color);
       color: white;
-      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary-color), #e74c3c);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .parallax-section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
       overflow: hidden;
     }
 
-    /* Background Animation */
-    .background {
-      position: fixed;
-      width: 200vw;
-      height: 200vh;
-      background: radial-gradient(circle at 50% 50%,
-          rgba(255, 111, 97, 0.2),
-          rgba(27, 27, 27, 0) 60%);
-      animation: float 20s infinite linear alternate;
+    .parallax-bg {
+      position: absolute;
+      width: 110%;
+      height: 110%;
+      background: url('https://picsum.photos/1920/1080') center/cover;
+      transform: translateZ(-1px) scale(2.1);
       z-index: -1;
     }
 
-    @keyframes float {
-      0% {
-        transform: translate(-10%, -10%) scale(1);
-      }
-
-      100% {
-        transform: translate(10%, 10%) scale(1.2);
-      }
-    }
-
-    /* Main Container */
-    .container {
-      position: relative;
+    .content-section {
+      min-height: 100vh;
+      padding: 100px 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
-      z-index: 1;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
     }
 
-    /* Typography */
+    .content-section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 600px;
+      transform: scale(0.9);
+      transition: all 0.6s ease;
+    }
+
+    .card.active {
+      transform: scale(1);
+    }
+
     h1 {
-      font-size: 6rem;
-      font-weight: 900;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: floatText 3s ease-in-out infinite;
+      font-size: 4em;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 30px;
     }
 
-    p {
-      font-size: 1.5rem;
-      margin-top: 1rem;
-      color: rgba(255, 255, 255, 0.8);
+    .scroll-indicator {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
     }
 
-    /* Button */
-    .cta-button {
-      margin-top: 2rem;
-      padding: 1rem 2.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: white;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 0 20px rgba(255, 111, 97, 0.5);
-    }
-
-    .cta-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 40px rgba(255, 111, 97, 0.8);
-    }
-
-    /* Particle Effects */
-    .particles {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .particle {
-      position: absolute;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: particlePop 1s ease-out forwards;
-    }
-
-    @keyframes particlePop {
-      0% {
-        transform: scale(0);
-        opacity: 1;
-      }
-
-      100% {
-        transform: scale(3);
-        opacity: 0;
-      }
-    }
-
-    /* Floating Text Animation */
-    @keyframes floatText {
+    @keyframes bounce {
 
       0%,
+      20%,
+      50%,
+      80%,
       100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) translateX(-50%);
       }
 
-      50% {
-        transform: translateY(-10px) scale(1.05);
-      }
-    }
-
-    /* Hologram Effect */
-    .hologram-effect {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg,
-          rgba(255, 111, 97, 0.1),
-          rgba(136, 216, 176, 0.1));
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-      animation: hologram 3s infinite linear;
-      mix-blend-mode: screen;
-    }
-
-    @keyframes hologram {
-      0% {
-        opacity: 0.3;
+      40% {
+        transform: translateY(-30px) translateX(-50%);
       }
 
-      50% {
-        opacity: 0.1;
-      }
-
-      100% {
-        opacity: 0.3;
+      60% {
+        transform: translateY(-15px) translateX(-50%);
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Background Animation -->
-  <div class="background"></div>
-
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Hologram Effect -->
-    <div class="hologram-effect"></div>
-
-    <!-- Particles -->
-    <div class="particles"></div>
-
-    <!-- Heading -->
-    <h1>Welcome</h1>
-    <p>Experience the future of web design with stunning animations.</p>
-
-    <!-- Call-to-Action Button -->
-    <button class="cta-button">Get Started</button>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
   </div>
 
+  <section class="parallax-section">
+    <div class="parallax-bg"></div>
+    <h1>Welcome to Scroll Magic</h1>
+    <div class="scroll-indicator">↓ Scroll Down ↓</div>
+  </section>
+
+  <section class="content-section">
+    <div class="card">
+      <h2>First Section</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="card">
+      <h2>Second Section</h2>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="card">
+      <h2>Third Section</h2>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+  </section>
+
   <script>
-    // Particle Animation on Load
-    const particles = document.querySelector('.particles');
+    // Progress bar animation
+    window.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      document.querySelector('.progress-bar').style.width = `${scrolled}%`;
+    });
 
-    function createParticles() {
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.top = `${Math.random() * 100}%`;
-        particle.style.width = particle.style.height =
-          `${Math.random() * 8 + 4}px`;
-        particle.style.animationDelay = `${i * 0.05}s`;
-        particles.appendChild(particle);
+    // Intersection Observer for animation triggers
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
 
-        setTimeout(() => particle.remove(), 1000);
-      }
-    }
+    document.querySelectorAll('.content-section, .card').forEach(el => {
+      observer.observe(el);
+    });
 
-    // Initial Particle Burst
-    createParticles();
+    // Parallax effect
+    window.addEventListener('scroll', () => {
+      const parallaxSection = document.querySelector('.parallax-section');
+      const scrolled = window.pageYOffset;
+      parallaxSection.style.transform = `translateY(${scrolled * 0.5}px)`;
+    });
 
-    // Continuous Particle Animation
-    setInterval(createParticles, 2000);
-
-    // Button Interaction
-    const ctaButton = document.querySelector('.cta-button');
-    ctaButton.addEventListener('click', () => {
-      alert("Let's build something amazing!");
+    // Smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 </body>

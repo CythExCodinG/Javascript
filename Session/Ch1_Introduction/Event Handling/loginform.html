@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .btn {
+      width: 20%;
+      font-size: 14px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 2px 2px 2px 1px;
+      background-color: lightgreen;
+      font-weight: 600;
+      transition: all 0.2s ease-in;
+    }
+
+    .btn:hover {
+      box-shadow: 0px 0px 0px;
+      transform: translateX(2px) translateY(2px);
+    }
+
+    span {
+      font-size: 40px;
+    }
+  </style>
+  <script>
+    function checkRadio() {
+      const ary = document.getElementsByName('location')
+      const res = document.getElementById('result')
+      let str = ""
+      for (r of ary) {
+        str += r.value + " " + r.checked + "<br>"
+      }
+      res.innerHTML = str
+    }
+  </script>
+</head>
+
+<body>
+  <form>
+    <label for="in">
+      <span>India</span>
+    </label>
+    <input id="in" name="location" type="radio" value="India" onclick="checkRadio()">
+    <label for="usa">
+      <span>USA</span>
+    </label>
+    <input id="usa" name="location" type="radio" value="USA" onclick="checkRadio()">
+    <label for="eu">
+      <span>Europe</span>
+    </label>
+    <input id="eu" name="location" type="radio" value="Europe" onclick="checkRadio()">
+    <label for="cn">
+      <span>China</span>
+    </label>
+    <input id="cn" name="location" type="radio" value="China" onclick="checkRadio()">
+    <div id="result"></div>
+  </form>
+
+
+</body>
+
+</html>

@@ -13,8 +13,9 @@ const arrOfObj = [{
   metadata: {
     addr: "Darewadi"
   }
-}, {
+},
+{
   firstName: "RohitB",
   lastName: "Piro"
 }]
-console.log(arrOfObj[0])
+console.log(arrOfObj[0]['metadata'])

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Click Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+      flex-direction: column;
+    }
+
+    .game-container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .circle.revealed {
+      background-color: #2ecc71;
+    }
+
+    .score-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-container">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+  <div class="score-container">
+    <p>Total Score: <span id="total-score">0</span></p>
+    <p>Chances Left: <span id="chances-left">3</span></p>
+  </div>
+
+  <script>
+    const circles = document.querySelectorAll('.circle');
+    const totalScoreElement = document.getElementById('total-score');
+    const chancesLeftElement = document.getElementById('chances-left');
+
+    let totalScore = 0;
+    let chancesLeft = 3;
+
+    // Generate random numbers for each circle
+    const numbers = Array.from({ length: circles.length }, () => Math.floor(Math.random() * 20) + 1);
+
+    circles.forEach((circle, index) => {
+      circle.setAttribute('data-number', numbers[index]);
+    });
+
+    circles.forEach(circle => {
+      circle.addEventListener('click', () => {
+        if (!circle.classList.contains('revealed') && chancesLeft > 0) {
+          const number = parseInt(circle.getAttribute('data-number'));
+          circle.textContent = number;
+          circle.classList.add('revealed');
+          totalScore += number;
+          totalScoreElement.textContent = totalScore;
+          chancesLeft--;
+          chancesLeftElement.textContent = chancesLeft;
+
+          // Check if all circles are revealed
+          const allRevealed = Array.from(circles).every(circle => circle.classList.contains('revealed'));
+          if (allRevealed || chancesLeft === 0) {
+            // Reveal all numbers if game ends
+            circles.forEach(circle => {
+              if (!circle.classList.contains('revealed')) {
+                const number = parseInt(circle.getAttribute('data-number'));
+                circle.textContent = number;
+                circle.classList.add('revealed');
+              }
+            });
+            alert(`Game Over! Your total score is ${totalScore}`);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
