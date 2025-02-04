@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Éclat - Modern Fashion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    :root {
+      --primary: #2a2a2a;
+      --accent: #e8c8a9;
+      --text: #f5f5f5;
+    }
+
+    body {
+      background-color: var(--primary);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .nav {
+      padding: 1.5rem 5%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(42, 42, 42, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      margin-top: -80px;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s forwards 0.5s;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 5rem 5%;
+    }
+
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      aspect-ratio: 3/4;
+    }
+
+    .collection-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+
+    .collection-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .collection-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+      transform: translateY(100%);
+      transition: transform 0.3s ease-out;
+    }
+
+    .collection-card:hover .collection-overlay {
+      transform: translateY(0);
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      background: var(--accent);
+      color: var(--primary);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(232, 200, 169, 0.3);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .newsletter {
+      padding: 5rem 5%;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .newsletter input {
+      padding: 1rem;
+      width: 300px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--text);
+      margin: 2rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .newsletter input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(232, 200, 169, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <h1>ÉCLAT</h1>
+    <div class="nav-links">
+      <a href="#collections">Collections</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Redefining Modern Elegance</h1>
+      <p>Discover our curated collection of contemporary fashion pieces</p>
+      <button class="btn">Explore Collection</button>
+    </div>
+  </section>
+
+  <section class="collections-grid" id="collections">
+    <div class="collection-card">
+      <img src="https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?auto=format&fit=crop&w=800&q=80"
+        alt="Spring Collection">
+      <div class="collection-overlay">
+        <h3>Spring Collection</h3>
+        <p>Fresh looks for the new season</p>
+      </div>
+    </div>
+    <!-- Add more collection cards here -->
+  </section>
+
+  <section class="newsletter">
+    <h2>Join Our Newsletter</h2>
+    <p>Receive exclusive offers and early access to new collections</p>
+    <input type="email" placeholder="Enter your email">
+    <br>
+    <button class="btn">Subscribe</button>
+  </section>
+
+  <script>
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.collection-card, .newsletter').forEach((el) => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(30px)';
+      observer.observe(el);
+    });
+
+    // Navigation Hide/Show on Scroll
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll) {
+        document.querySelector('.nav').style.transform = 'translateY(-100%)';
+      } else {
+        document.querySelector('.nav').style.transform = 'translateY(0)';
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+</body>
+
+</html>

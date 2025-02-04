@@ -11,12 +11,15 @@
 
 //* This is why classes is used just define the blueprint once and then use if for others
 class animal {
+  date = new Date()
   constructor(name, speaks) {
     this.name = name
     this.speaks = speaks
+
   }
   speak() {
     console.log("Bhow bhow man " + this.speaks)
+    console.log(this.date.getFullYear())
   }
 
   //static method can be called directly on the class rather than 

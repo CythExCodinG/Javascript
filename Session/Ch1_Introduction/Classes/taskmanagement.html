@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Task Manager</title>
+  <style>
+    :root {
+      --primary: #2A2B2E;
+      --accent: #FFD700;
+      --secondary: #5F4B8B;
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+      min-height: 100vh;
+      padding: 2rem;
+      color: white;
+      perspective: 1000px;
+      overflow-x: hidden;
+    }
+
+    .parallax-wrapper {
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      transform: translateZ(50px);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--accent), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .input-section {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      transform: translateZ(40px);
+    }
+
+    #taskInput {
+      flex: 1;
+      padding: 1.2rem;
+      border: 2px solid var(--glass);
+      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      font-size: 1.1rem;
+      color: white;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    #taskInput:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      transform: translateZ(20px);
+    }
+
+    #addButton {
+      padding: 1.2rem 2.5rem;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #addButton::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent);
+      transition: 0.5s;
+    }
+
+    #addButton:hover::before {
+      left: 100%;
+    }
+
+    #addButton:hover {
+      transform: translateZ(20px) rotateX(10deg);
+      box-shadow: 0 15px 30px rgba(95, 75, 139, 0.4);
+    }
+
+    .task-list {
+      background: var(--glass);
+      border-radius: 25px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent);
+      border-radius: 15px;
+      transform-style: preserve-3d;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .task-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      background: linear-gradient(45deg, transparent, var(--glass));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .task-item:hover::before {
+      opacity: 1;
+    }
+
+    .task-item:hover {
+      transform: translateZ(30px) rotateX(5deg) rotateY(5deg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes taskAppear {
+      from {
+        opacity: 0;
+        transform: rotateX(-45deg) translateZ(-100px);
+      }
+
+      to {
+        opacity: 1;
+        transform: rotateX(0) translateZ(0);
+      }
+    }
+
+    .task-item.completed {
+      opacity: 0.6;
+      transform: translateZ(10px);
+    }
+
+    .task-item.completed .task-text {
+      text-decoration: line-through;
+    }
+
+    .task-text {
+      flex: 1;
+      color: white;
+      font-size: 1.2rem;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .delete-btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #ff4d4d, #ff0000);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .delete-btn:hover {
+      transform: translateZ(10px) rotateZ(3deg);
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+    }
+
+    .checkbox {
+      width: 25px;
+      height: 25px;
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .checkbox.checked {
+      background: var(--accent);
+      transform: rotateY(360deg);
+    }
+
+    .checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .input-section {
+        flex-direction: column;
+      }
+
+      #addButton {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parallax-wrapper">
+    <div class="container">
+      <div class="header">
+        <h1>Luxury Task Manager</h1>
+        <div class="input-section">
+          <input type="text" id="taskInput" placeholder="What needs to be done?">
+          <button id="addButton">Add Task ✨</button>
+        </div>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+  </div>
+
+  <script>
+    // Parallax Effect
+    document.addEventListener('mousemove', (e) => {
+      const parallaxWrapper = document.querySelector('.parallax-wrapper');
+      const x = (window.innerWidth / 2 - e.pageX) / 30;
+      const y = (window.innerHeight / 2 - e.pageY) / 30;
+
+      parallaxWrapper.style.transform = `
+                rotateX(${y}deg)
+                rotateY(${-x}deg)
+                translateZ(0)
+            `;
+    });
+
+    // Task Manager Logic
+    document.addEventListener('DOMContentLoaded', loadTasks);
+    const taskInput = document.getElementById('taskInput');
+    const addButton = document.getElementById('addButton');
+    const taskList = document.getElementById('taskList');
+
+    addButton.addEventListener('click', addTask);
+    taskInput.addEventListener('keypress', e => e.key === 'Enter' && addTask());
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (!taskText) return;
+
+      const task = {
+        id: Date.now(),
+        text: taskText,
+        completed: false
+      };
+
+      createTaskElement(task);
+      saveTasks();
+      taskInput.value = '';
+    }
+
+    function createTaskElement(task) {
+      const taskItem = document.createElement('div');
+      taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
+      taskItem.setAttribute('data-id', task.id);
+      taskItem.style.animation = 'taskAppear 0.6s ease forwards';
+
+      taskItem.innerHTML = `
+                <div class="checkbox ${task.completed ? 'checked' : ''}"></div>
+                <div class="task-text">${task.text}</div>
+                <button class="delete-btn">Delete</button>
+            `;
+
+      const checkbox = taskItem.querySelector('.checkbox');
+      const deleteBtn = taskItem.querySelector('.delete-btn');
+
+      checkbox.addEventListener('click', () => toggleTask(task, taskItem));
+      deleteBtn.addEventListener('click', () => deleteTask(task.id, taskItem));
+
+      taskList.appendChild(taskItem);
+    }
+
+    function toggleTask(task, taskItem) {
+      task.completed = !task.completed;
+      taskItem.classList.toggle('completed');
+      checkbox.classList.toggle('checked');
+      saveTasks();
+    }
+
+    function deleteTask(id, taskItem) {
+      taskItem.style.animation = 'taskAppear 0.3s ease reverse forwards';
+      setTimeout(() => {
+        taskItem.remove();
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        localStorage.setItem('tasks', JSON.stringify(tasks.filter(t => t.id !== id)));
+      }, 300);
+    }
+
+    function saveTasks() {
+      const tasks = Array.from(document.querySelectorAll('.task-item')).map(task => ({
+        id: Number(task.dataset.id),
+        text: task.querySelector('.task-text').textContent,
+        completed: task.classList.contains('completed')
+      }));
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      tasks.forEach(createTaskElement);
+    }
+  </script>
+</body>
+
+</html>

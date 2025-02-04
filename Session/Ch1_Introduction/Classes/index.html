@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      font-family: "Funnel Display", serif;
+
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      background-color: rgba(172, 167, 167, 0.932);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    input {
+      margin: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+
+    }
+
+
+
+    .btn:hover {
+      box-shadow: 0px 0px 50px lightgreen;
+    }
+
+    .btn {
+      width: 30%;
+      align-self: center;
+      background-color: rgb(110, 218, 157);
+      font-size: 16px;
+      overflow: hidden;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 0px 5px lightgreen;
+      transition: all 0.3s ease-in;
+    }
+  </style>
+</head>
+
+<body>
+  <strong>
+    <p id="demo"></p>
+  </strong>
+  <div class="container">
+    <h1 style="align-self: center; color: rgb(241, 227, 19); margin: 20px;">Calculate Multiplication</h1>
+    <input type="number" id="no1" placeholder="Enter a no">
+    <!-- <input type="number" id="no2" placeholder="Enter a no"> -->
+    <input class="btn" type="button" value="Square" onclick="sq()">
+    <h1 id="add" style="text-align: center; color: rgb(240, 57, 12);"></h1>
+  </div>
+
+  <script>
+    function sq() {
+      let a = document.getElementById('no1').value
+      // let b = document.getElementById('no2').value
+      let f = (x) => { return x * x }
+
+      divshow = document.getElementById('add').innerHTML = f(a)
+    }
+
+  </script>
+</body>
+
+</html>
